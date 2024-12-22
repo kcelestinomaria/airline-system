@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'bookings',
+    'bookings.apps.BookingsConfig',
+    #'bookings.apps.BookingsConfig',
 ]
 
 REST_FRAMEWORK = {
