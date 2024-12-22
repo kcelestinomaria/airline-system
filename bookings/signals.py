@@ -5,11 +5,12 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import os
 
-
-#Ticket Issuance (Using Django signals to generate PDF tickets)
-
 def generate_ticket(passenger):
     """Generate a PDF ticket for the passenger."""
+    if not passenger.flight:
+        print(f"Error: Passenger {passenger.id} has no associated flight.")
+        return None
+
     filename = f"ticket_{passenger.id}.pdf"
     filepath = os.path.join("tickets", filename)
 
@@ -29,4 +30,5 @@ def generate_ticket(passenger):
 def issue_ticket(sender, instance, created, **kwargs):
     if created and instance.seat_class == "Confirmed":
         ticket_path = generate_ticket(instance)
-        print(f"Ticket generated at: {ticket_path}")
+        if ticket_path:
+            print(f"Ticket generated at: {ticket_path}")
